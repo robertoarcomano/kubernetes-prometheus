@@ -21,7 +21,12 @@ kubectl replace -f prometheus-deployment.yaml --force
 kubectl replace -f prometheus-service.yaml --force
 
 # 5. Load ingress
-kubectl replace -f prometheus-ingress.yaml --force
+# kubectl replace -f prometheus-ingress.yaml --force
 
 # 6. Show everything
 kubectl get all -n $NS
+echo
+
+# 7. Give link
+IP=$(kubectl get node -o jsonpath="{.items[0].status.addresses[*].address}"|tr " " "\n"|grep -E '[0-9]+.[0-9]+.[0-9]+.[0-9]+')
+echo "Go to link: http://$IP:30000"
