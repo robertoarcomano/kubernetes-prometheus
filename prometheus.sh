@@ -30,3 +30,15 @@ echo
 # 7. Give link
 IP=$(kubectl get node -o jsonpath="{.items[0].status.addresses[*].address}"|tr " " "\n"|grep -E '[0-9]+.[0-9]+.[0-9]+.[0-9]+')
 echo "Go to link: http://$IP:30000"
+
+# 8. Grafana datasource
+kubectl replace -f kubernetes-grafana/grafana-datasource-config.yaml --force
+
+# 9. Grafana deployment
+kubectl replace -f kubernetes-grafana/deployment.yaml --force
+
+# 10. Grafana service
+kubectl replace -f kubernetes-grafana/service.yaml --force
+
+# 11. Grafana link
+echo "Go to link: http://$IP:32000"
