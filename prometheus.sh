@@ -42,3 +42,4 @@ kubectl replace -f kubernetes-grafana/service.yaml --force
 
 # 11. Grafana link
 echo "Go to link: http://$IP:32000"
+
