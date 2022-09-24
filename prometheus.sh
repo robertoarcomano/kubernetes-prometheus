@@ -23,22 +23,22 @@ kubectl replace -f prometheus-service.yaml --force
 # 5. Load ingress
 # kubectl replace -f prometheus-ingress.yaml --force
 
-# 6. Show everything
+# 6. Grafana datasource
+kubectl replace -f grafana-datasource-config.yaml --force
+
+# 7. Grafana deployment
+kubectl replace -f grafana-deployment.yaml --force
+
+# 8. Grafana service
+kubectl replace -f grafana-service.yaml --force
+
+# 9. Show everything
 kubectl get all -n $NS
 echo
 
-# 7. Give link
+# 10. Prometheus link
 IP=$(kubectl get node -o jsonpath="{.items[0].status.addresses[*].address}"|tr " " "\n"|grep -E '[0-9]+.[0-9]+.[0-9]+.[0-9]+')
 echo "Go to link: http://$IP:30000"
-
-# 8. Grafana datasource
-kubectl replace -f kubernetes-grafana/grafana-datasource-config.yaml --force
-
-# 9. Grafana deployment
-kubectl replace -f kubernetes-grafana/deployment.yaml --force
-
-# 10. Grafana service
-kubectl replace -f kubernetes-grafana/service.yaml --force
 
 # 11. Grafana link
 echo "Go to link: http://$IP:32000"
