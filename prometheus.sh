@@ -32,14 +32,20 @@ kubectl replace -f grafana-deployment.yaml --force
 # 8. Grafana service
 kubectl replace -f grafana-service.yaml --force
 
-# 9. Show everything
+# 9. Node exporter daemonsets
+kubectl replace -f node-exporter-daemonsets.yaml --force
+
+# 10. Node exporter service
+kubectl replace -f node-exporter-service.yaml --force
+
+# 11. Show everything
 kubectl get all -n $NS
 echo
 
-# 10. Prometheus link
+# 12. Prometheus link
 IP=$(kubectl get node -o jsonpath="{.items[0].status.addresses[*].address}"|tr " " "\n"|grep -E '[0-9]+.[0-9]+.[0-9]+.[0-9]+')
 echo "Go to link: http://$IP:30000"
 
-# 11. Grafana link
+# 13. Grafana link
 echo "Go to link: http://$IP:32000"
 
