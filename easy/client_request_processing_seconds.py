@@ -1,21 +1,26 @@
-from prometheus_client import start_http_server, Summary
-import random
+from prometheus_client import start_http_server, Gauge
 import time
+import os
+import subprocess
+import re
 
-# Create a metric to track time spent and requests made.
-REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+PORT = 8000
+speed = Gauge('hdparm', 'Hard Disk Performance')
+SECONDS = 60
 
 
-# Decorate function with metric.
-@REQUEST_TIME.time()
-def process_request(t):
-    """A dummy function that takes some time."""
-    time.sleep(t)
+def get_speed(input):
+    return \
+        re.findall("[0-9]+.[0-9]+",
+        input.
+        stdout.
+        decode("utf-8")) \
+        [-1]
 
 
 if __name__ == '__main__':
-    # Start up the server to expose the metrics.
-    start_http_server(8000)
-    # Generate some requests.
+    start_http_server(PORT)
     while True:
-        process_request(random.random())
+        output = subprocess.run(["sudo", "hdparm", "-t", "/dev/sda"], capture_output=True)
+        speed.set(get_speed(output))
+        time.sleep(SECONDS)
