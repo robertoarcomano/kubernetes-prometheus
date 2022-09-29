@@ -3,8 +3,10 @@
 # C. Constants
 NS=monitoring
 NOW="--grace-period=0 --force"
-PROMETHEUS_DIR="\/var\/lib\/prometheus"
+PROMETHEUS_DIR="\/var\/lib\/pv\/prometheus"
+GRAFANA_DIR="\/var\/lib\/pv\/grafana"
 sed -ri "s/path: .*/path: $PROMETHEUS_DIR/" prometheus-deployment.yaml
+sed -ri "s/path: .*/path: $GRAFANA_DIR/" grafana-deployment.yaml
 
 # 0. Re-create namespace
 kubectl delete ns $NS $NOW

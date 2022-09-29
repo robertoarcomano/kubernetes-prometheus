@@ -35,4 +35,4 @@ spec:
             name: prometheus-server-conf
         - name: prometheus-storage-volume
           hostPath:
-            path: /var/lib/prometheus
+            path: /var/lib/pv/prometheus
